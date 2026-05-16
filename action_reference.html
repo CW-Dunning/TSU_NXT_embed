@@ -1,0 +1,84 @@
+<script>
+    // 1. Keep a global variable to hold the data once fetched
+    let database = null;
+
+    // 2. Render data pairs vertically
+    function displayFieldDetails() {
+        const selector = document.getElementById('fieldSelector');
+        const card = document.getElementById('detailCard');
+        
+        if (!selector.value || !database) {
+            card.style.display = 'none';
+            return;
+        }
+
+        const selectedField = database.fields[selector.value];
+        card.innerHTML = ''; 
+        card.style.display = 'block';
+
+        Object.entries(selectedField).forEach(([key, value]) => {
+            if (key === 'Field') return; 
+
+            const row = document.createElement('div');
+            row.className = 'detail-row';
+            
+            if (key === 'Use for') row.classList.add('row-use-for');
+            if (key === 'DO NOT Use for') row.classList.add('row-do-not-use-for');
+
+            let cleanValue = value;
+            if (value === null) cleanValue = "<em>None</em>";
+            if (value === true) cleanValue = "Yes";
+            if (value === false) cleanValue = "No";
+
+            row.innerHTML = `
+                <div class="detail-label">${key}</div>
+                <div class="detail-value">${cleanValue}</div>
+            `;
+            card.appendChild(row);
+        });
+    }
+
+    // 3. Populate the Select Dropdown list
+    function populateDropdown() {
+        const selector = document.getElementById('fieldSelector');
+        database.fields.forEach((item, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = item.Field;
+            selector.appendChild(option);
+        });
+    }
+
+    // 4. Blackbaud Addin Client Handshake Loop + Dynamic Fetch
+    function initAddin() {
+        if (window.BBSkyAddinClient) {
+            var client = new BBSkyAddinClient.AddinClient({
+                callbacks: {
+                    init: function(args) {
+                        // Fetch your data file right when the tile initializes
+                        fetch("https://cw-dunning.github.io/TSU_NXT_embed/action_data.json")
+                            .then(response => response.json())
+                            .then(data => {
+                                database = data; // Save data to global variable
+                                populateDropdown(); // Fill dropdown
+                                
+                                // Tell NXT the tile is ready only AFTER data loads
+                                args.ready({
+                                    showUI: true,
+                                    title: 'Gift Intake Reference'
+                                });
+                            })
+                            .catch(err => {
+                                console.error("Failed to load reference data JSON:", err);
+                                document.getElementById('fieldSelector').innerHTML = "<option>Error loading data...</option>";
+                            });
+                    }
+                }
+            });
+        } else {
+            setTimeout(initAddin, 50);
+        }
+    }
+
+    initAddin();
+</script>
