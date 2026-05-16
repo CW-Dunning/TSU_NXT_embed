@@ -2,8 +2,26 @@
 <html>
 <head>
   <title>Test Page</title>
+
+  <!-- Required: SKY Add-in Client -->
+  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
 <body>
   <h1 style="font-family: Arial;">Hello World</h1>
+
+  <script>
+    // Initialize the client
+    const client = new BBSkyAddinClient.AddinClient();
+
+    client.init().then((args) => {
+      console.log("Context:", args.context);
+      
+      args.ready({
+        showUI: true,
+        title: "Hello World Tile"
+      });
+    });
+  </script>
 </body>
 </html>
+``
