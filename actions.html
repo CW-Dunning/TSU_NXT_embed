@@ -1,72 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-
-  <!-- SKY Add-in Client (REQUIRED for NXT) -->
-  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      margin: 0;
-    }
-
-    button {
-      padding: 10px 14px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    #iframeContainer {
-      margin-top: 10px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
-    }
-  </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <base target="_top">
+    <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
-
 <body>
+    <div style="font-family: sans-serif; padding: 10px;">
+        <h3 style="margin-top:0;">Gift Intake Reference</h3>
+        
+        <iframe width="100%" height="514" frameborder="0" scrolling="no" src="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity/_layouts/15/Doc.aspx?sourcedoc={0d7265fc-78e8-4ef7-9d31-53d8ac1278f5}&action=embedview&wdAllowInteractivity=False&Item=Table1&wdHideGridlines=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0"></iframe>
+    </div>
 
-  <h3 style="margin-top:0;">Data Dictionary</h3>
-
-  <button onclick="loadDictionary()">Open Dictionary</button>
-
-  <div id="iframeContainer"></div>
-
-  <script>
-    // 🔑 Handshake (your working version)
-    function initAddin() {
-      if (window.BBSkyAddinClient) {
-
-        var client = new BBSkyAddinClient.AddinClient({
-          callbacks: {
-            init: function(args) {
-
-              args.ready({
-                showUI: true,
-                title: 'Data Dictionary'
-              });
-
+    <script>
+        // 2. The "Library Guard" function
+        function initAddin() {
+            // Check if the Blackbaud library is loaded yet
+            if (window.BBSkyAddinClient) {
+               
+                var client = new BBSkyAddinClient.AddinClient({
+                    callbacks: {
+                        init: function(args) {
+                            // 3. THE HANDSHAKE
+                            args.ready({
+                                showUI: true,
+                                title: 'Gift Intake Reference'
+                            });
+                        }
+                    }
+                });
+            } else {
+                // If not loaded, wait 50ms and try again
+                console.log("Library not ready, retrying...");
+                setTimeout(initAddin, 50);
             }
-          }
-        });
+        }
 
-      } else {
-        console.log("Library not ready, retrying...");
-        setTimeout(initAddin, 50);
-      }
-    }
-
-    initAddin();
-
-    // ✅ Button click → inject iframe
-    function loadDictionary() {
-      document.getElementById("iframeContainer").innerHTML = `
-        <iframe 
-          src="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity/_layouts/15/Doc.aspx?sourcedoc={060d71db-7e18-410d-a276-2d8d
+        // Start the check
+        initAddin();
+    </script>
+</body>
+</html>
