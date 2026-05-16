@@ -1,4 +1,4 @@
-"{
+{
   ""tableName"": ""Table3"",
   ""description"": ""Action fields applicable to Constituents, Events, and Appeals"",
   ""recordCount"": 26,
@@ -524,4 +524,4 @@
       ""Custom Definition"": false
     }
   ]
-}"
+}
