@@ -6,37 +6,37 @@
     <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
 <body>
-    <div style="font-family: sans-serif; padding: 10px;">
-        <h3 style="margin-top:0;">Action Dictionary</h3>
+    <div style="font-family: sans-serif; padding: 15px; text-align: center;">
+        <h3 style="margin-top:0; text-align: left; color: #333;">Action Definitions</h3>
+        <p style="font-size: 13px; color: #666; text-align: left; margin-bottom: 15px;">
+            Access the University reference data table securely via SharePoint.
+        </p>
         
-        <iframe width="100%" height="514" frameborder="0" scrolling="no" src="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity/_layouts/15/Doc.aspx?sourcedoc={0d7265fc-78e8-4ef7-9d31-53d8ac1278f5}&action=embedview&wdAllowInteractivity=False&Item=Table1&wdHideGridlines=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0"></iframe>
+        <a href="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity/_layouts/15/Doc.aspx?sourcedoc={0d7265fc-78e8-4ef7-9d31-53d8ac1278f5}&action=view" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           style="background-color: #0078d4; color: white; padding: 12px 20px; text-decoration: none; display: block; border-radius: 4px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+           VIEW SHAREPOINT TABLE
+        </a>
     </div>
 
     <script>
-        // 2. The "Library Guard" function
         function initAddin() {
-            // Check if the Blackbaud library is loaded yet
             if (window.BBSkyAddinClient) {
-               
                 var client = new BBSkyAddinClient.AddinClient({
                     callbacks: {
                         init: function(args) {
-                            // 3. THE HANDSHAKE
                             args.ready({
                                 showUI: true,
-                                title: 'Action Dictionary'
+                                title: 'Action Definitions'
                             });
                         }
                     }
                 });
             } else {
-                // If not loaded, wait 50ms and try again
-                console.log("Library not ready, retrying...");
                 setTimeout(initAddin, 50);
             }
         }
-
-        // Start the check
         initAddin();
     </script>
 </body>
