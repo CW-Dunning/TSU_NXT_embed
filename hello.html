@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test Page</title>
+  <meta charset="utf-8">
 
-  <!-- Required: SKY Add-in Client -->
+  <!-- IMPORTANT: use absolute path if hosted on GitHub -->
   <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
+
 <body>
-  <h1 style="font-family: Arial;">Hello World</h1>
+  <div style="font-family: Arial; padding: 10px;">
+    <h2>Hello World ✅</h2>
+    <p>If you see this, the add-in handshake worked.</p>
+  </div>
 
   <script>
-    // Initialize the client
-    const client = new BBSkyAddinClient.AddinClient();
+    function initAddin() {
+      if (window.BBSkyAddinClient) {
 
-    client.init().then((args) => {
-      console.log("Context:", args.context);
-      
-      args.ready({
-        showUI: true,
-        title: "Hello World Tile"
-      });
-    });
+        var client = new BBSkyAddinClient.AddinClient({
+          callbacks: {
+            init: function(args) {
+
+              // ✅ THIS is the critical handshake
+              args.ready({
+                showUI: true,
+                title: 'Hello World Test'
+              });
+
+            }
+          }
+        });
+
+      } else {
+        console.log("Library not ready, retrying...");
+        setTimeout(initAddin, 50);
+      }
+    }
+
+    initAddin();
   </script>
+
 </body>
 </html>
-``
