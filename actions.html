@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Data Dictionary</title>
+  <meta charset="utf-8">
+
+  <!-- SKY Add-in Client (REQUIRED for NXT) -->
+  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
       padding: 10px;
+      margin: 0;
     }
 
     button {
-      padding: 10px 16px;
+      padding: 10px 14px;
       font-size: 14px;
       cursor: pointer;
     }
 
-    #container {
+    #iframeContainer {
       margin-top: 10px;
-      width: 100%;
     }
 
     iframe {
@@ -27,23 +30,43 @@
     }
   </style>
 </head>
+
 <body>
 
-  <h3>Data Dictionary</h3>
+  <h3 style="margin-top:0;">Data Dictionary</h3>
 
-  <button onclick="loadFile()">Open Dictionary</button>
+  <button onclick="loadDictionary()">Open Dictionary</button>
 
-  <div id="container"></div>
+  <div id="iframeContainer"></div>
 
   <script>
-    function loadFile() {
-      document.getElementById("container").innerHTML = `
-        <iframe 
-          src="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity">
-        </iframe>
-      `;
-    }
-  </script>
+    // 🔑 Handshake (your working version)
+    function initAddin() {
+      if (window.BBSkyAddinClient) {
 
-</body>
-</html>
+        var client = new BBSkyAddinClient.AddinClient({
+          callbacks: {
+            init: function(args) {
+
+              args.ready({
+                showUI: true,
+                title: 'Data Dictionary'
+              });
+
+            }
+          }
+        });
+
+      } else {
+        console.log("Library not ready, retrying...");
+        setTimeout(initAddin, 50);
+      }
+    }
+
+    initAddin();
+
+    // ✅ Button click → inject iframe
+    function loadDictionary() {
+      document.getElementById("iframeContainer").innerHTML = `
+        <iframe 
+          src="https://campusworksinc0.sharepoint.com/sites/CW-TarletonStateUniversity/_layouts/15/Doc.aspx?sourcedoc={060d71db-7e18-410d-a276-2d8d
