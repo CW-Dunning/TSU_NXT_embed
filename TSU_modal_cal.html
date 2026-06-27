@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kuali Form Modal</title>
+    <!-- Blackbaud SKY Add-in Client SDK -->
+    <script src="https://blackbaudcdn.net"></script>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #ffffff; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <!-- This div will be completely invisible on the Home Page, but visible inside the Modal -->
+    <div id="modalContent" style="display:none; height:100vh;">
+        <!-- Replace this with your Google Form, Fillout, or Kuali URL -->
+        <iframe src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=true"></iframe>
+        </div>
+
+    <script>
+        // Check if the current window context is the popup modal
+        const urlParams = new URLSearchParams(window.location.search);
+        const isModalView = urlParams.get('view') === 'modal';
+
+        if (isModalView) {
+            // VIEW A: We are inside the modal window. Show the form iframe.
+            document.getElementById('modalContent').style.display = 'block';
+
+            const modalClient = new BBAddinClient.AddinClient({
+                callbacks: {
+                    init: function(args) {
+                        // Tell Blackbaud the modal form iframe is ready to show
+                        args.ready({ showUI: true });
+                    }
+                }
+            });
+        } else {
+            // VIEW B: We are loading hidden in the sidebar. Register the text link.
+            const sidebarClient = new BBAddinClient.AddinClient({
+                callbacks: {
+                    init: function(args) {
+                        // Provide the title that Blackbaud will display in the sidebar menu
+                        args.ready({ 
+                            showUI: true, 
+                            title: "Gift Intake Kuali" 
+                        });
+                    },
+                    buttonClick: function() {
+                        // This event triggers when a user clicks your link in the CRM sidebar
+                        sidebarClient.showModal({
+                            // Pass a query param so the next window knows to load the form layout
+                            url: 'https://github.io'
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
