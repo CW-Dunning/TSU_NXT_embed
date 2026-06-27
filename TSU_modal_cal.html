@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Kuali Form Modal</title>
-    <!-- Blackbaud SKY Add-in Client SDK -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <base target="_top">
+    <!-- Correct CDN Script Path matching your working file -->
     <script src="https://blackbaudcdn.net"></script>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #ffffff; }
@@ -12,50 +12,62 @@
 </head>
 <body>
 
-    <!-- This div will be completely invisible on the Home Page, but visible inside the Modal -->
-    <div id="modalContent" style="display:none; height:100vh;">
-        <!-- Replace this with your Google Form, Fillout, or Kuali URL -->
-        <iframe src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=true"></iframe>
-        </div>
+    <!-- Container for your form. Hidden by default on the home page, shown inside the popup modal -->
+    <div id="formContainer" style="display: none; height: 100vh;">
+        <!-- Replace this src with your temporary Google Form, Fillout, or eventual Kuali Form -->
+        <iframe src="https://google.com"></iframe>
+    </div>
 
     <script>
-        // Check if the current window context is the popup modal
-        const urlParams = new URLSearchParams(window.location.search);
-        const isModalView = urlParams.get('view') === 'modal';
+        function initAddin() {
+            // Check for the exact global variable from your working file
+            if (window.BBSkyAddinClient) {
+                
+                // Determine if we are inside the popup modal or background sidebar mode
+                var urlParams = new URLSearchParams(window.location.search);
+                var isModalView = urlParams.get('view') === 'modal';
 
-        if (isModalView) {
-            // VIEW A: We are inside the modal window. Show the form iframe.
-            document.getElementById('modalContent').style.display = 'block';
+                if (isModalView) {
+                    // --- MODAL LAYOUT VIEW ---
+                    document.getElementById('formContainer').style.display = 'block';
 
-            const modalClient = new BBAddinClient.AddinClient({
-                callbacks: {
-                    init: function(args) {
-                        // Tell Blackbaud the modal form iframe is ready to show
-                        args.ready({ showUI: true });
-                    }
+                    var modalClient = new BBSkyAddinClient.AddinClient({
+                        callbacks: {
+                            init: function(args) {
+                                args.ready({ showUI: true });
+                            }
+                        }
+                    });
+
+                } else {
+                    // --- SIDEBAR ACTIONS LINK REGISTER VIEW ---
+                    var sidebarClient = new BBSkyAddinClient.AddinClient({
+                        callbacks: {
+                            init: function(args) {
+                                // This registers the hyperlink text on your Home Page sidebar
+                                args.ready({
+                                    showUI: true,
+                                    title: 'Gift Intake Kuali'
+                                });
+                            },
+                            buttonClick: function() {
+                                // Triggers the popup modal when a user clicks the sidebar link
+                                sidebarClient.showModal({
+                                    url: 'https://github.io'
+                                });
+                            }
+                        }
+                    });
                 }
-            });
-        } else {
-            // VIEW B: We are loading hidden in the sidebar. Register the text link.
-            const sidebarClient = new BBAddinClient.AddinClient({
-                callbacks: {
-                    init: function(args) {
-                        // Provide the title that Blackbaud will display in the sidebar menu
-                        args.ready({ 
-                            showUI: true, 
-                            title: "Gift Intake Kuali" 
-                        });
-                    },
-                    buttonClick: function() {
-                        // This event triggers when a user clicks your link in the CRM sidebar
-                        sidebarClient.showModal({
-                            // Pass a query param so the next window knows to load the form layout
-                            url: 'https://github.io'
-                        });
-                    }
-                }
-            });
+
+            } else {
+                // Polling loop safety catch matching your working file
+                setTimeout(initAddin, 50);
+            }
         }
+        
+        // Execute the script loop
+        initAddin();
     </script>
 </body>
 </html>
