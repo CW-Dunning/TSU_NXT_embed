@@ -1,28 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>TEST Form MVP Modal</title>
-    <!-- Blackbaud SKY Add-in Client SDK -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <base target="_top">
+    <!-- Correct CDN Script Path from your working file -->
     <script src="https://blackbaudcdn.net"></script>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: transparent; }
-        iframe { width: 100%; height: 100%; border: none; }
+        /* Ensure the form takes up the entire tile area without double scrollbars */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            overflow: hidden; 
+            background-color: #ffffff; 
+        }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
     </style>
 </head>
 <body>
 
-    <!-- Static Kuali Build Form URL -->
-    <iframe src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=true title="Kuali Form"></iframe>
+    <!-- This iframe renders your form straight into the Dashboard Tile -->
+    <!-- Swap this placeholder URL with your actual Kuali, Fillout, or Google Form embed link later -->
+    <iframe src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=true"></iframe>
+    
     <script>
-        // Initialize the client. This handles the mandatory postMessage handshake.
-        const client = new BBAddinClient.AddinClient({
-            callbacks: {
-                init: function(args) {
-                    args.ready({ showUI: true });
-                }
+        function initAddin() {
+            // Check for the correct global object name from your working code
+            if (window.BBSkyAddinClient) {
+                var client = new BBSkyAddinClient.AddinClient({
+                    callbacks: {
+                        init: function(args) {
+                            // Tell Raiser's Edge the tile is ready to unhide and display
+                            args.ready({
+                                showUI: true,
+                                title: 'Gift Intake Kuali'
+                            });
+                        }
+                    }
+                });
+            } else {
+                // Safety loop to wait for the library to be fully active
+                setTimeout(initAddin, 50);
             }
-        });
+        }
+        
+        // Launch the initialization loop
+        initAddin();
     </script>
 </body>
 </html>
