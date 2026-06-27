@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST Form MVP Modal</title>
+    <!-- Blackbaud SKY Add-in Client SDK -->
+    <script src="https://blackbaudcdn.net"></script>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: transparent; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Static Kuali Build Form URL -->
+    <iframe src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=true title="Kuali Form"></iframe>
+    <script>
+        // Initialize the client. This handles the mandatory postMessage handshake.
+        const client = new BBAddinClient.AddinClient({
+            callbacks: {
+                init: function(args) {
+                    args.ready({ showUI: true });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
