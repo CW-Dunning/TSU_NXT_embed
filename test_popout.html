@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
-</head>
-
-<body style="font-family: Arial; padding: 10px;">
-  <h2>Modal Loaded ✅</h2>
-  <p>If you see this, modal is working.</p>
+<body>
+  <h1 style="color:red;">STATIC CONTENT</h1>
 
   <script>
-    // ✅ Immediate initialization (CRITICAL for modals)
+    console.log("SCRIPT RAN ✅");
+
     var client = new BBSkyAddinClient.AddinClient({
       callbacks: {
         init: function(args) {
-
-          console.log("MODAL INIT ✅", args);
+          console.log("INIT FIRED ✅");
 
           args.ready({
             showUI: true,
             title: "Modal Test"
           });
-
         }
       }
     });
   </script>
 </body>
-</html>
