@@ -1,20 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
+</head>
+
 <body>
-  <h1 style="color:red;">STATIC CONTENT</h1>
+  <h2>Hello World ✅</h2>
+  <p>If you see this, it loaded.</p>
 
   <script>
-    console.log("SCRIPT RAN ✅");
+    console.log("SCRIPT LOADED ✅");
+
+    if (!window.BBSkyAddinClient) {
+      console.error("AddinClient NOT loaded ❌");
+    }
 
     var client = new BBSkyAddinClient.AddinClient({
       callbacks: {
         init: function(args) {
+
           console.log("INIT FIRED ✅");
 
           args.ready({
             showUI: true,
-            title: "Modal Test"
+            title: "Hello World Test"
           });
+
         }
       }
     });
   </script>
+
 </body>
+</html>
