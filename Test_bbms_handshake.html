@@ -4,21 +4,22 @@
   <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
 <body>
-  <div id="app">Loading...</div>
+  <div id="app">Loading form...</div>
 
   <script>
     var client = new BBSkyAddinClient.AddinClient({
       callbacks: {
         init: function (args) {
-          console.log("INIT CALLED", args);
 
-          document.getElementById("app").innerHTML =
-            "<h3>Add-in Loaded ✅</h3>";
+          var formUrl = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=4z-1n489sEy9u6kqxlvJeokWIjImj9JDlEdDrEx84CFURVNZNUUwNENTTUxVWTdFUVU2MEhKOVNLTy4u&embed=truel";
+          // OPTION 1: redirect (most reliable)
+          window.location.href = formUrl;
 
-          args.ready({
-            showUI: true,
-            title: "Test Add-in"
-          });
+          // OPTION 2 (if embedding works):
+          // document.getElementById("app").innerHTML =
+          //   '<iframe src="' + formUrl + '" style="width:100%;height:100vh;border:none;"></iframe>';
+
+          args.ready({ showUI: true });
         }
       }
     });
