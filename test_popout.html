@@ -1,39 +1,30 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title></title>
-
-<style></style>
+<html>
+<head>
+  <meta charset="utf-8">
+  https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 </head>
-<body>
-	
-	<h1>HEPdata Raiser's Edge NXT Portal</h1>
-	
-	<ul>
-		<li>Most Recent Synchronization: 06/26/2026 12:41 a.m.</li>
-		<li>Most Recent Record: Mr. Clifford Elliott O'Rear 1992, ABM Industries, $200.00 donation</li>
-	</ul>
-	
 
-	
-<script>
-(function() {
+<body style="font-family: Arial; padding: 10px;">
+  <h2>Modal Loaded ✅</h2>
+  <p>If you see this, modal is working.</p>
 
-	// BBSkyAddinClient is global here.
-	var client = new BBSkyAddinClient.AddinClient({
-		callbacks: {
-			init: function(args) {},
-		}
-	});
+  <script>
+    // ✅ Immediate initialization (CRITICAL for modals)
+    var client = new BBSkyAddinClient.AddinClient({
+      callbacks: {
+        init: function(args) {
 
-	$(function() {
-		$(document).on("click", "#test", function() {
-			console.log(client);
-		});
-	});
-}());
-</script>
+          console.log("MODAL INIT ✅", args);
 
+          args.ready({
+            showUI: true,
+            title: "Modal Test"
+          });
 
-</body></html>
+        }
+      }
+    });
+  </script>
+</body>
+</html>
