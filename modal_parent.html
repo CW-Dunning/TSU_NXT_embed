@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
+</head>
+<body>
+
+<script>
+var client = new BBSkyAddinClient.AddinClient({
+  callbacks: {
+    init: function(args) {
+
+      console.log("INIT ✅");
+
+      args.ready({ showUI: true });
+
+      // ✅ Redirect immediately
+      window.location.href = "https://cw-dunning.github.io/TSU_NXT_embed/test_popout.html";
+
+    }
+  }
+});
+</script>
+
+</body>
+</html>
