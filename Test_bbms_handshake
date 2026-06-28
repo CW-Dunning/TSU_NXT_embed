@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
+</head>
+<body>
+  <div id="app">Loading...</div>
+
+  <script>
+    var client = new BBSkyAddinClient.AddinClient({
+      callbacks: {
+        init: function (args) {
+          console.log("INIT CALLED", args);
+
+          document.getElementById("app").innerHTML =
+            "<h3>Add-in Loaded ✅</h3>";
+
+          args.ready({
+            showUI: true,
+            title: "Test Add-in"
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
