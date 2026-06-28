@@ -10,12 +10,16 @@ var client = new BBSkyAddinClient.AddinClient({
   callbacks: {
     init: function(args) {
 
-      console.log("INIT ✅");
+      args.ready({
+        showUI: true,
+        title: "Open Modal"
+      });
 
-      args.ready({ showUI: true });
-
-      // ✅ Redirect immediately
-      window.location.href = "https://cw-dunning.github.io/TSU_NXT_embed/test_popout.html";
+      // ✅ Launch modal immediately (no button needed)
+      client.showModal({
+        url: "https://cw-dunning.github.io/TSU_NXT_embed/test_popout.html",
+        context: {}
+      });
 
     }
   }
